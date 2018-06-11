@@ -24,13 +24,11 @@ def create_model1():
     model.add(Dropout(0.3))
     model.add(Dense(num_classes, activation='softmax'))
     
-    model.compile(loss=keras.losses.categorical_crossentropy,
-                  optimizer=keras.optimizers.Adam(),
-                  metrics=['accuracy'])
+
     logging.debug("Created {}".format('baseline'))
     return model
 
-create_model1().summary()
+#create_model1().summary()
 
 
 #%%
@@ -64,9 +62,7 @@ def create_model2():
     # Normalization
     model.add(BatchNormalization())
     model.add(Dense(num_classes, activation='softmax'))
-    model.compile(loss='categorical_crossentropy',
-                optimizer=ks.optimizers.Adam(),
-                metrics=['accuracy'])
+
     logging.debug("Created {}".format('Bigger'))
 
     return model
@@ -82,39 +78,44 @@ def create_model3(input_shape):
     # l2 regularization as well as dropout can help prevent overfitting
     l2_reg = ks.regularizers.l2(0.01)
     
-    X_input = ks.layers.Input(input_shape)
-    X = BatchNormalization()(X_input)
-    X = ks.layers.Conv2D(8, (3,3), strides=(1,1), activation='relu',
+    
+    model = Sequential()
+    model.add(ks.layers.InputLayer(input_shape=(img_rows,img_cols,channels)))
+
+    #X_input = ks.layers.Input(input_shape)
+    
+    model.add(BatchNormalization())
+    model.add(ks.layers.Conv2D(8, (3,3), strides=(1,1), activation='relu',
                kernel_regularizer=l2_reg,
-               kernel_initializer='glorot_normal')(X)
-    X = ks.layers.MaxPooling2D((2,2))(X)
+               kernel_initializer='glorot_normal'))
+    model.add(ks.layers.MaxPooling2D((2,2)))
     
-    X = ks.layers.Conv2D(16, (3,3), strides=(1,1), activation='relu',
+    model.add(ks.layers.Conv2D(16, (3,3), strides=(1,1), activation='relu',
                kernel_regularizer=l2_reg,
-               kernel_initializer='glorot_normal')(X)
-    X = MaxPooling2D((2,2))(X)    
+               kernel_initializer='glorot_normal'))
+    model.add(MaxPooling2D((2,2)))
     
-    X = ks.layers.Conv2D(32, (2,2), strides=(1,1), activation='relu',
+    model.add(ks.layers.Conv2D(32, (2,2), strides=(1,1), activation='relu',
                kernel_regularizer=l2_reg,
-               kernel_initializer='glorot_normal')(X)
+               kernel_initializer='glorot_normal'))
     
-    X = MaxPooling2D((2,2))(X)
+    model.add(MaxPooling2D((2,2)))
     
-    X = Flatten()(X)
+    model.add(Flatten())
     
-    X = BatchNormalization()(X)
-    X = Dense(128, activation='relu')(X)
-    X = Dropout(drop)(X)
+    model.add(BatchNormalization())
+    model.add(Dense(128, activation='relu'))
+    model.add(Dropout(drop))
     
-    X = Dense(32, activation='relu')(X)
-    X = Dropout(0.1)(X)
+    model.add(Dense(32, activation='relu'))
+    model.add(Dropout(0.1))
     
-    X = Dense(16, activation='relu')(X)
+    model.add(Dense(16, activation='relu'))
 #     X = Dropout(drop)(X)    
     
-    X = Dense(10, activation='softmax')(X)
+    model.add(Dense(10, activation='softmax'))
     
-    model = ks.models.Model(inputs=[X_input], outputs=[X])
+    #model.add(ks.models.Model(inputs=[X_input], outputs=[X])
     logging.debug("Created {}".format('Smaller'))
 
     return model
@@ -123,11 +124,19 @@ def create_model3(input_shape):
 
 
 #%%
-model = create_model2()
-model.summary()
+model = create_model3(input_shape=(img_rows,img_cols,channels))
+model.compile(loss=keras.losses.categorical_crossentropy,
+              optimizer=keras.optimizers.Adam(),
+              metrics=['accuracy'])
 #%%
 json_path = os.path.join(path_run,r"model_architecture.json")
 model_json = model.to_json()
 with open(json_path, "w") as json_file:
     json_file.write(model_json)
+    
 logging.info("Saved model to {}".format(json_path))
+
+
+model.summary()
+
+
