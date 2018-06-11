@@ -6,7 +6,7 @@ import json
 import itertools
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-run_name = 'bigger'
+run_name = 'smaller'
 #########################################################
 
 DATA_ROOT = r"/home/batman/Dropbox/DATA/02 fashionmnist"
