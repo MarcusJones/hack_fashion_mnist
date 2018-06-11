@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 batch_size = 256
 num_classes = 10
-epochs = 50
+epochs = 100
 
 #input image dimensions
 img_rows, img_cols = 28, 28
 channels   = 1
 
 #%%
-def create_model1():
+def create_model1(input_shape):
     model = Sequential()
     model.add(Conv2D(32, kernel_size=(3, 3),activation='relu',kernel_initializer='he_normal',input_shape=input_shape))
     
@@ -32,13 +32,13 @@ def create_model1():
 
 
 #%%
-def create_model2():
+def create_model2(input_shape):
     '''
     Creates a sequential model
     '''
     
     model = Sequential()
-    model.add(ks.layers.InputLayer(input_shape=(img_rows,img_cols,channels)))
+    model.add(ks.layers.InputLayer(input_shape=input_shape))
     # Normalization
     model.add(BatchNormalization())
     # Conv + Maxpooling
@@ -124,7 +124,7 @@ def create_model3(input_shape):
 
 
 #%%
-model = create_model3(input_shape=(img_rows,img_cols,channels))
+model = create_model2(input_shape=(img_rows,img_cols,channels))
 model.compile(loss=keras.losses.categorical_crossentropy,
               optimizer=keras.optimizers.Adam(),
               metrics=['accuracy'])
