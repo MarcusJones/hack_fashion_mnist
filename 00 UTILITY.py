@@ -9,8 +9,14 @@ import itertools
 run_name = 'smaller'
 #########################################################
 
+
+# LAPTOP
 DATA_ROOT = r"/home/batman/Dropbox/DATA/02 fashionmnist"
 PROJECT_ROOT = r"/home/batman/git/hack_fashion_mnist"
+#PC
+PROJECT_ROOT = r"/home/alfred/git/hack_fashion_mnist"
+DATA_ROOT = r"/home/alfred/Dropbox/DATA/02 fashionmnist"
+
 path_run = os.path.join(PROJECT_ROOT,'Runs',run_name)
 assert os.path.exists(path_run)
 
@@ -32,7 +38,7 @@ from keras.utils import to_categorical
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
-
+import sklearn as sk
 import keras as ks
 import keras
 from keras.models import Sequential
