@@ -3,9 +3,9 @@
 
 
 #%%
-small = r"/home/batman/git/hack_fashion_mnist/Runs/smaller_actual"
-model_path = os.path.join(small,"model_weights.h5")
-model_arch = os.path.join(small,"model_architecture.json")
+small = r"smaller_actual"
+model_arch = os.path.join(PROJECT_ROOT,'Runs',small,"model_architecture.json")
+
 
 json_file = open(model_arch, 'r')
 loaded_model_json = json_file.read()
@@ -16,10 +16,14 @@ model.summary()
 vis_path = os.path.join(small,'small visualized.png')
 ks.utils.vis_utils.plot_model(model, to_file=vis_path, show_shapes=True, show_layer_names=False)
 
+
+vis_path = os.path.join(PROJECT_ROOT,'Runs',small,'small visualized HOR.png')
+ks.utils.vis_utils.plot_model(model, to_file=vis_path, show_shapes=True, show_layer_names=False,rankdir='LR')
+
+
 #%%
-baseline = r"/home/batman/git/hack_fashion_mnist/Runs/baseline"
-model_path = os.path.join(baseline,"model_weights.h5")
-model_arch = os.path.join(baseline,"model_architecture.json")
+baseline = r"baseline"
+model_arch = os.path.join(PROJECT_ROOT,'Runs',baseline,"model_architecture.json")
 
 #model_path = os.path.join(baseline,"model_weights.h5")
 #model = ks.models.load_model(model_path)
@@ -33,10 +37,12 @@ model.summary()
 vis_path = os.path.join(baseline,'baseline visualized.png')
 ks.utils.vis_utils.plot_model(model, to_file=vis_path, show_shapes=True, show_layer_names=False)
 
+vis_path = os.path.join(PROJECT_ROOT,'Runs',baseline,'baseline visualized HOR.png')
+ks.utils.vis_utils.plot_model(model, to_file=vis_path, show_shapes=True, show_layer_names=False,rankdir='LR')
+
 #%%
-bigger = r"/home/batman/git/hack_fashion_mnist/Runs/bigger"
-model_path = os.path.join(bigger,"model_weights.h5")
-model_arch = os.path.join(bigger,"model_architecture.json")
+bigger = r"bigger100"
+model_arch = os.path.join(PROJECT_ROOT,'Runs',bigger,"model_architecture.json")
 
 #model_path = os.path.join(baseline,"model_weights.h5")
 #model = ks.models.load_model(model_path)
@@ -47,5 +53,8 @@ json_file.close()
 model = ks.models.model_from_json(loaded_model_json)
 model.summary()
 
-vis_path = os.path.join(bigger,'bigger visualized.png')
+vis_path = os.path.join(PROJECT_ROOT,'Runs',bigger,'bigger visualized VERT.png')
 ks.utils.vis_utils.plot_model(model, to_file=vis_path, show_shapes=True, show_layer_names=False)
+
+vis_path = os.path.join(PROJECT_ROOT,'Runs',bigger,'bigger visualized HOR.png')
+ks.utils.vis_utils.plot_model(model, to_file=vis_path, show_shapes=True, show_layer_names=False,rankdir='LR')
