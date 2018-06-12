@@ -14,8 +14,8 @@ run_name = 'bigger'
 DATA_ROOT = r"/home/batman/Dropbox/DATA/02 fashionmnist"
 PROJECT_ROOT = r"/home/batman/git/hack_fashion_mnist"
 #PC
-#PROJECT_ROOT = r"/home/alfred/git/hack_fashion_mnist"
-#DATA_ROOT = r"/home/alfred/Dropbox/DATA/02 fashionmnist"
+PROJECT_ROOT = r"/home/alfred/git/hack_fashion_mnist"
+DATA_ROOT = r"/home/alfred/Dropbox/DATA/02 fashionmnist"
 
 path_run = os.path.join(PROJECT_ROOT,'Runs',run_name)
 assert os.path.exists(path_run)
